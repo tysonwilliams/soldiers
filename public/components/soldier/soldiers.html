@@ -1,0 +1,8 @@
+<div class="row">
+    <div class="col-md-4" ng-repeat="soldier in soldiers">
+        <div ng-repeat="sub in soldier.subordinates">
+            <h1>{{sub.firstName}} {{sub.lastName}}</h1>
+            <h3>{{sub.tasks}}</h3>
+        </div>
+    </div>
+</div>

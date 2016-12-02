@@ -1,0 +1,37 @@
+html {
+    background: url(https://www.irononsticker.com/images/US%20Army.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    z-index: 9999;
+}
+
+#jumbotron {
+    background: rgba(0, 40, 0, 0.3);
+    z-index: -1;
+}
+
+jumbotron h1, h3 {
+    text-align: center;
+    padding-bottom: 4vh;
+}
+
+#welcome-soldier {
+    color: rgba(0, 40, 0, 0.75);
+    text-align: center;
+}
+
+#tasks {
+    color: green;
+    display: block;
+}
+
+#tasks h1, h3 {
+    text-align: left;
+}
+
+#new-task {
+    color: blue;
+    text-align: left;
+}

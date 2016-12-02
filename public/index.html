@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MilitaryApp">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <title>Army Leader</title>
+</head>
+
+<body>
+
+    <navbar>navbar</navbar>
+
+    <div class="container">
+        <div ng-view></div>
+    </div>
+
+    <!-- Third Party -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+
+    <!-- Main App -->
+    <script src="app.js"></script>
+    <script src="components/navbar/navbar.js"></script>
+    <script src="components/soldier/soldier.js"></script>
+    <script src="components/tasks/tasks.js"></script>
+
+    <!-- Auth -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.js"></script>
+    <script src="components/auth/auth.js"></script>
+    <script src="components/auth/register/register.js"></script>
+    <script src="components/auth/login/login.js"></script>
+    <script src="components/auth/logout/logout.js"></script>
+
+</body>
+
+</html>
