@@ -14,8 +14,7 @@ app.config(function ($routeProvider) {
             controller: "LoginController"
         })
         .when("/soldier", {
-            templateUrl: "components/soldier/soldier.html",
-            controller: "SoldierController"
+            templateUrl: "components/soldier/soldier.html"
         })
         .when("/soldiers", {
             templateUrl: "components/soldier/soldiers.html",

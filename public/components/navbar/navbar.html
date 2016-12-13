@@ -19,9 +19,10 @@
                 <li ng-show="SoldierService.isAuthenticated()"><a href="#/leader">Leader</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li ng-hide="SoldierService.isAuthenticated()"><a href="#/login">Login</a></li>
-                <li ng-hide="SoldierService.isAuthenticated()"><a href="#/register">Register</a></li>
-                <li ng-show="SoldierService.isAuthenticated()"><a href="#/logout">Logout</a></li>
+                <li ng-hide="SoldierService.isAuthenticated()"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li ng-hide="SoldierService.isAuthenticated()"><a href="#/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                <li ng-show="SoldierService.isAuthenticated()"><a href="#/soldier"><span class="glyphicon glyphicon-user"></span> {{SoldierService.soldier.firstName}}</a></li>
+                <li ng-show="SoldierService.isAuthenticated()"><a href="#/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
         </div>
     </div>

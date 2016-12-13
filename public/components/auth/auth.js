@@ -28,13 +28,18 @@ app.service("TokenService", ["$localStorage", function ($localStorage) {
     };
 }]);
 
-app.service("SoldierService", ["$http", "TokenService", function ($http, TokenService) {
+app.service("SoldierService", ["$http", "$localStorage", "TokenService", function ($http, $localStorage, TokenService) {
+    var self = this;
+    this.soldier = $localStorage.soldier || {};
+    
     this.register = function (soldier) {
         return $http.post("/auth/register", soldier);
     };
     this.login = function (soldier) {
         return $http.post("/auth/login", soldier).then(function (response) {
             TokenService.setToken(response.data.token);
+            $localStorage.soldier = response.data.soldier;
+            self.soldier = response.data.soldier;
         });
     };
     this.logout = function () {
@@ -44,12 +49,19 @@ app.service("SoldierService", ["$http", "TokenService", function ($http, TokenSe
         return !!TokenService.getToken();
     };
     this.getSoldiers = function () {
-        return $http.get("/api/soldiers").then(function (response) {
+        return $http.get("/api/soldiers/me/subordinates").then(function (response) {
             return response.data;
         }, function (response) {
             console.log("Error " + response.status + ": " + response.statusText);
         });
     };
+    // this.getSoldier = function () {
+    //     return $http.get("/api/soldiers/me").then(function (response) {
+    //         return response.data;
+    //     }, function (response) {
+    //         console.log("Error " + response.status + ": " + response.statusText);
+    //     });
+    // };
 }]);
 
 app.service("AuthInterceptor", ["$q", "$location", "TokenService", function ($q, $location, TokenService) {

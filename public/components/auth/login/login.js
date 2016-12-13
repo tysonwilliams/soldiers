@@ -5,6 +5,7 @@ app.controller("LoginController", ["$scope", "$location", "SoldierService", func
         SoldierService.login(soldier).then(function (response) {
             $location.path("/soldier");
         }, function (response) {
+            console.log(response);
             alert(response.data.message);
         });
     }

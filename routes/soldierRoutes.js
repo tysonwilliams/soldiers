@@ -2,21 +2,17 @@ var express = require("express");
 var soldierRouter = express.Router();
 var Soldier = require("../models/soldier");
 
-soldierRouter.route("/")
+soldierRouter.route("/leaders")
     .get(function (req, res) {
-        Soldier.find({
-            subordinates: req.user.subordinates
-        }).populate("subordinates").exec(function (err, subordinates) {
+        Soldier.find({isLeader: true}, function (err, soldiers) {
             if (err) return res.status(500).send(err);
-            res.send(subordinates);
+            res.send(soldiers);
         });
     });
 
-soldierRouter.route("/:soldierId")
+soldierRouter.route("/me")
     .get(function (req, res) {
-        Soldier.findOne({
-            _id: req.params.soldierId,
-        }, function (err, soldier) {
+        Soldier.findById(req.user._id, function (err, soldier) {
             if (err) return res.status(500).send(err);
             if (!soldier) return res.status(400).send("No soldier found.");
             else res.send(soldier);
@@ -38,6 +34,18 @@ soldierRouter.route("/:soldierId")
         }, function (err, deletedSoldier) {
             if (err) return res.status(500).send(err);
             res.send(deletedSoldier);
+        });
+    });
+
+soldierRouter.route("/me/subordinates")
+    .get(function (req, res) {
+        Soldier.find({
+            leader: req.user._id
+        })
+        .populate("subordinates")
+        .exec(function (err, subordinates) {
+            if (err) return res.status(500).send(err);
+            res.send(subordinates);
         });
     });
 
