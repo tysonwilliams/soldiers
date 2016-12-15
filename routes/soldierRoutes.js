@@ -20,7 +20,7 @@ soldierRouter.route("/me")
     })
     .put(function (req, res) {
         Soldier.findOneAndUpdate({
-            _id: req.params.soldierId,
+            _id: req.params._id,
         }, req.body, {
             new: true
         }, function (err, updatedSoldier) {
@@ -29,12 +29,27 @@ soldierRouter.route("/me")
         });
     })
     .delete(function (req, res) {
-        Soldier.findOneAndRemove({
-            _id: req.params.soldierId,
-        }, function (err, deletedSoldier) {
+        console.log("deleted");
+        // Soldier.findById(req.user._id, function(err, soldier) {
+        //     soldier.remove(function(err, deletedSoldier) {
+        //         res.send(deletedSoldier);
+        //     });
+        // })
+
+        Soldier.findOneAndRemove({_id: req.user._id}, function(err, deletedSoldier) {
             if (err) return res.status(500).send(err);
             res.send(deletedSoldier);
-        });
+        })
+
+
+
+        // Soldier.findOneAndRemove({
+        //     _id: req.user._id,
+        // }, function (err, deletedSoldier) {
+        //     if (err) return res.status(500).send(err);
+        //     // console.log(deletedSoldier);
+        //     res.send(deletedSoldier);
+        // });
     });
 
 soldierRouter.route("/me/subordinates")
