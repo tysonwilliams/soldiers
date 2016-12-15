@@ -48,20 +48,11 @@ app.service("SoldierService", ["$http", "$localStorage", "TokenService", functio
     this.isAuthenticated = function () {
         return !!TokenService.getToken();
     };
-    this.getSoldiers = function () {
+    this.getSubordinates = function () {
         return $http.get("/api/soldiers/me/subordinates").then(function (response) {
             return response.data;
-        }, function (response) {
-            console.log("Error " + response.status + ": " + response.statusText);
-        });
-    };
-    // this.getSoldier = function () {
-    //     return $http.get("/api/soldiers/me").then(function (response) {
-    //         return response.data;
-    //     }, function (response) {
-    //         console.log("Error " + response.status + ": " + response.statusText);
-    //     });
-    // };
+        })
+    }
 }]);
 
 app.service("AuthInterceptor", ["$q", "$location", "TokenService", function ($q, $location, TokenService) {

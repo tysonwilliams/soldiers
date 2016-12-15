@@ -17,8 +17,6 @@ authRouter.post("/register", function (req, res) {
             if (req.body.leader) {
                 Soldier.findById(req.body.leader, function (err, leader) {
                     if (err) return res.status(500).send(err);
-                    console.log(leader);
-                    console.log(newSoldier);
                     leader.subordinates.push(newSoldier._id);
                     leader.save();
                 });

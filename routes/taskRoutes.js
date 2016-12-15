@@ -1,12 +1,15 @@
 var express = require("express");
 var taskRouter = express.Router();
 var Task = require("../models/task");
+var Soldier = require("../models/soldier");
 
 taskRouter.route("/")
     .get(function (req, res) {
         Task.find({
             creator: req.user._id
-        }, function (err, tasks) {
+        })
+        .populate("tasks")
+        .exec(function (err, tasks) {
             if (err) return res.status(500).send(err);
             res.send(tasks);
         });
@@ -17,6 +20,11 @@ taskRouter.route("/")
         task.save(function (err, newTask) {
             if (err) return res.status(500).send(err);
             res.status(201).send(newTask);
+            Soldier.findById(req.user._id, function (err, soldier) {
+                    if (err) return res.status(500).send(err);
+                    soldier.tasks.push(newTask);
+                    soldier.save();
+            });
         });
     });
 
@@ -43,8 +51,15 @@ taskRouter.route("/:taskId")
         });
     })
     .delete(function (req, res) {
-        console.log("taskRoutes.js delete");
-        console.log(req.body);
+        Soldier.findOne({
+            _id: req.user._id
+        }, function (err, soldier) {
+            if (err) return res.status(500).send(err);
+            var index = soldier.tasks.indexOf(req.params.taskId);
+            console.log(soldier.tasks[index]);
+            soldier.tasks.splice(index, 1);
+            soldier.save();
+        });
         Task.findOneAndRemove({
             _id: req.params.taskId,
             creator: req.user._id

@@ -2,6 +2,7 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
 var bcrypt = require("bcrypt");
+var Task = require("./task");
 
 var soldierSchema = new Schema({
     username: {
@@ -41,6 +42,17 @@ soldierSchema.pre("save", function (next) {
     bcrypt.hash(user.password, 10, function (err, hash) {
         if (err) return next(err);
         user.password = hash;
+        next();
+    });
+});
+
+// soldierSchema.pre("remove", function (next) {
+//     this.model('Task').remove({ creator: this._id }, next);
+// });
+
+soldierSchema.pre("findOneAndRemove", function (next) {
+    var query = this.getQuery();
+    Task.remove({creator: query._id}, function(err, deleted) {
         next();
     });
 });
