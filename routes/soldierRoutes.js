@@ -29,27 +29,10 @@ soldierRouter.route("/me")
         });
     })
     .delete(function (req, res) {
-        console.log("deleted");
-        // Soldier.findById(req.user._id, function(err, soldier) {
-        //     soldier.remove(function(err, deletedSoldier) {
-        //         res.send(deletedSoldier);
-        //     });
-        // })
-
         Soldier.findOneAndRemove({_id: req.user._id}, function(err, deletedSoldier) {
             if (err) return res.status(500).send(err);
             res.send(deletedSoldier);
-        })
-
-
-
-        // Soldier.findOneAndRemove({
-        //     _id: req.user._id,
-        // }, function (err, deletedSoldier) {
-        //     if (err) return res.status(500).send(err);
-        //     // console.log(deletedSoldier);
-        //     res.send(deletedSoldier);
-        // });
+        });
     });
 
 soldierRouter.route("/me/subordinates")
